@@ -23,9 +23,7 @@ export class MongoGenericRepository<T> implements IGenericAbstract<T> {
   }
 
   getByEmail(email: string): Promise<T> {
-    return this._repository.findOne({
-      $where: email,
-    });
+    return this._repository.findOne({ email }).exec();
   }
 
   updateById(id: string, item: T): Promise<T | null> {

@@ -1,6 +1,7 @@
 # Clean Architecture With NestJS
+
 ## Description
-It's been a while since my last article on [how to implement clean architecture on Node.js applications](https://betterprogramming.pub/node-clean-architecture-deep-dive-ab68e523554b), [git repo](https://github.com/royib/clean-architecture-node).
+
 After working with NestJS and TypeScript I thought it was a good idea to come back and write a new article on the subject. This time we are going to take the super power of typescript and the methodologies and tools of NestJS and harness them to our benefits.
 
 Coming from a background of object-oriented languages, it was natural that we
@@ -70,29 +71,34 @@ will always stay the same. We can change all of the above without changing our
 logic. This is what makes it so easy to test applications built on this
 architecture. Don’t worry if you don’t understand this yet, we will explore it
 step-by-step.
+
 ## Getting Started
+
 ### Dependencies
-* mongoDb - you need to provide a valid mongDb connection string.
-add a new environment variable named CLEAN_NEST_MONGO_CONNECTION_STRING
+
+```bash
+$ docker run --name mongodb -p 27017:27017 -d -t mongo
 ```
-export CLEAN_NEST_MONGO_CONNECTION_STRING='valid mongoDB connection string' 
+
+* MongoDB - you need to provide a valid MongoDB connection string.
+add a new environment variable named MONGO_URI
+
 ```
+export MONGO_URI="mongodb://localhost:27017/mongo"
+```
+
 ### Installing
+
 ```
 npm install
+
 ```
 ### Executing program
 
 ```
-npm start
+npm run dev
 ```
-## Authors
-Royi Benita
-## Version History
-* 1.0
+
 ## License
-This project is licensed under the [NAME HERE] License - see the LICENSE.md file for details
-## Acknowledgments
-Inspiration, code snippets, etc.
-* [clean-architecture-node](https://github.com/royib/clean-architecture-node)
-* [Node Clean Architecture — Deep Dive](https://betterprogramming.pub/node-clean-architecture-deep-dive-ab68e523554b)
+
+Nest is [MIT licensed](LICENSE).

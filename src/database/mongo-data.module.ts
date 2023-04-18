@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { IDataServices } from '../core/abstracts/IDataServices.abstract';
-import { DATA_BASE_CONFIGURATION } from '../config/index';
 import {
   Author,
   AuthorSchema,
@@ -19,7 +18,7 @@ import { MongoDataServices } from './mongo-data.service';
       { name: Book.name, schema: BookSchema },
       { name: Genre.name, schema: GenreSchema },
     ]),
-    MongooseModule.forRoot(DATA_BASE_CONFIGURATION.mongoConnectionString),
+    MongooseModule.forRoot('mongodb://localhost:27017/mongo'),
   ],
   providers: [
     {

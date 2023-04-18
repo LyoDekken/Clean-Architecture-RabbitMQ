@@ -28,12 +28,12 @@ async function bootstrap() {
 
   // Documentação Swagger
   const config = new DocumentBuilder()
-    .setTitle('Prova')
-    .setDescription('Avaliação - ...')
+    .setTitle('Prova de Engenharia')
+    .setDescription('Avaliação - Engenharia da Computação')
     .setVersion('1.0.0')
     .addTag('status')
     .addTag('auth')
-    .addTag('user')
+    .addTag('author')
     .addBearerAuth()
     .build();
 

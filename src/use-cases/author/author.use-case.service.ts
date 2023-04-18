@@ -9,6 +9,8 @@ export class AuthorService {
   constructor(private dataServices: IDataServices) {}
 
   async createNewAuthor(data: CreateAuthorDTO) {
+    await this.verify(data.email);
+
     const author = new Author();
 
     const hashPassword = await bcrypt.hash(data.password, 10);
@@ -36,7 +38,9 @@ export class AuthorService {
     const verify = await this.dataServices.authors.getByEmail(email);
 
     if (verify) {
-      throw new BadRequestException('User already exists.');
+      throw new BadRequestException(
+        `Um usuário já está cadastrado com o email: ${email}`,
+      );
     }
 
     return verify;
