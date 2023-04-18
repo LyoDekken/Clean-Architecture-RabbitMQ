@@ -79,25 +79,19 @@ step-by-step.
 ```bash
 $ docker run --name mongodb -p 27017:27017 -d -t mongo
 ```
-
 MongoDB - you need a new environment variable named MONGO_URI
-
+```bash
+$ export MONGO_URI="mongodb://localhost:27017/mongo"
 ```
-export MONGO_URI="mongodb://localhost:27017/mongo"
-```
-
 ### Installing
 
+```bash
+$ npm install
 ```
-npm install
-```
-
 ### Executing program
-
 ```
 npm run dev
 ```
-
 ## License
 
 Nest is [MIT licensed](LICENSE).
