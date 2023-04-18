@@ -3,5 +3,5 @@ export class Author {
 
   email: string;
 
-  password: string;
+  avatar_url: string;
 }

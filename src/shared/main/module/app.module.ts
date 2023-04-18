@@ -5,9 +5,11 @@ import { AppController } from '../http/app.controller';
 import { DataServicesModule } from 'src/database/services/database.services.module';
 import { AuthorUseCasesModule } from 'src/use-cases/author/author.use-case.module';
 import { AuthorController } from 'src/http/author.http';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
   imports: [
+    MulterModule.register({ dest: '/uploads' }),
     AuthorUseCasesModule,
     DataServicesModule,
     ConfigModule.forRoot({ isGlobal: true }),

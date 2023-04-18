@@ -2,7 +2,7 @@ export class Genre {
   name: BookGenre;
 }
 
-enum BookGenre {
+export enum BookGenre {
   Romance,
   Ficção,
   Fantasia,

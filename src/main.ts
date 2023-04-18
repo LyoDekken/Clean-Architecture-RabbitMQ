@@ -3,9 +3,13 @@ import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from './shared/main/module/app.module';
+import RabbitmqServer from './rabbitmq-server';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+  const server = new RabbitmqServer('amqp://admin:admin@localhost:5672');
+  await server.start();
 
   // Habilitando o CORS na aplicação
   app.enableCors({
@@ -28,11 +32,10 @@ async function bootstrap() {
 
   // Documentação Swagger
   const config = new DocumentBuilder()
-    .setTitle('Prova de Engenharia')
-    .setDescription('Avaliação - Engenharia da Computação')
+    .setTitle('Prova de Ciência')
+    .setDescription('Avaliação - Ciência da Computação')
     .setVersion('1.0.0')
     .addTag('status')
-    .addTag('auth')
     .addTag('author')
     .addBearerAuth()
     .build();
@@ -40,7 +43,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
 
-  await app.listen(3333, '0.0.0.0');
+  await app.listen(3333);
 
   const baseUrl = 'http://localhost:3333';
   console.log(`\n 🚀 Server is running on!  ${baseUrl}/docs`);

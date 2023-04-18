@@ -18,14 +18,6 @@ export class CreateAuthorDTO {
     example: 'user@email.com',
   })
   email: string;
-
-  @IsString()
-  @IsNotEmpty()
-  @ApiProperty({
-    description: 'Senha do Usuário',
-    example: 'Abc@1234',
-  })
-  password: string;
 }
 
 export class UpdateAuthorDTO extends PartialType(CreateAuthorDTO) {
@@ -44,12 +36,4 @@ export class UpdateAuthorDTO extends PartialType(CreateAuthorDTO) {
     example: 'user@email.com',
   })
   email: string;
-
-  @IsString()
-  @IsNotEmpty()
-  @ApiProperty({
-    description: 'Senha do Usuário',
-    example: 'Abc@1234',
-  })
-  password: string;
 }

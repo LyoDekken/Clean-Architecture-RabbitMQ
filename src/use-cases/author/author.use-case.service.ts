@@ -1,8 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { Author } from '../../core/entities';
 import { CreateAuthorDTO, UpdateAuthorDTO } from '../../core/dtos';
-import * as bcrypt from 'bcrypt';
-import { IDataServices } from 'src/core/abstracts/IDataServices.abstract';
+import { IDataServices } from '../../core/abstracts/IDataServices.abstract';
 
 @Injectable()
 export class AuthorService {
@@ -13,11 +12,17 @@ export class AuthorService {
 
     const author = new Author();
 
-    const hashPassword = await bcrypt.hash(data.password, 10);
-
     author.name = data.name;
     author.email = data.email;
-    author.password = hashPassword;
+    author.avatar_url = '_';
+
+    return author;
+  }
+
+  async updateAvatar(data: string) {
+    const author = new Author();
+
+    author.avatar_url = data;
 
     return author;
   }
@@ -25,11 +30,8 @@ export class AuthorService {
   async updateAuthor(data: UpdateAuthorDTO) {
     const author = new Author();
 
-    const hashPassword = await bcrypt.hash(data.password, 10);
-
     author.name = data.name;
     author.email = data.email;
-    author.password = hashPassword;
 
     return author;
   }

@@ -19,7 +19,7 @@ export class MongoGenericRepository<T> implements IGenericAbstract<T> {
   }
 
   getById(id: string): Promise<T> {
-    return this._repository.findById(id);
+    return this._repository.findById(id).exec();
   }
 
   getByEmail(email: string): Promise<T> {
