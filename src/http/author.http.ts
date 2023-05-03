@@ -7,14 +7,16 @@ import {
   Put,
   UseInterceptors,
   UploadedFile,
+  Delete,
 } from '@nestjs/common';
 import { CreateAuthorDTO, UpdateAuthorDTO } from '../core/dtos';
 import { AuthorUseCases } from '../use-cases/author/author.use-case';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
-import * as crypto from 'crypto';
 import RabbitmqServer from 'src/rabbitmq-server';
+import * as crypto from 'crypto';
+import * as fs from 'fs';
 
 @ApiTags('author')
 @Controller('author')
@@ -29,19 +31,6 @@ export class AuthorController {
     const server = new RabbitmqServer('amqp://admin:admin@localhost:5672');
 
     await server.start();
-
-    // const html =
-    // `<!DOCTYPE html>
-    //   <html>
-    //     <head>
-    //     <meta charset="UTF-8">
-    //     <title>Envio de nome concluído</title>
-    //     </head>
-    //       <body>
-    //       <h1>Nome enviado com sucesso para ${authorDto.email}</h1>
-    //       <p>O seu nome foi enviado com sucesso! Obrigado por compartilhar essa informação conosco.</p>
-    //     </body>
-    //   </html>`;
 
     await server.publishInQueue('server', JSON.stringify(authorDto));
 
@@ -74,11 +63,13 @@ export class AuthorController {
     @Param('id') id: string,
     @UploadedFile() file: Express.Multer.File,
   ) {
+    await this.deleteFile(id);
+
     const update = await this.authorUseCases.UpdateUserAvatar(
       id,
       file.filename,
     );
-    console.log('file', file.filename);
+
     return update;
   }
 
@@ -106,5 +97,23 @@ export class AuthorController {
     const user = await this.authorUseCases.getAuthorById(id);
 
     return user.avatar_url;
+  }
+
+  @Delete('file/:id')
+  @ApiOperation({
+    summary: 'Retorna um usuário pelo id',
+  })
+  async deleteFile(@Param('id') id: string) {
+    const user = await this.authorUseCases.getAuthorById(id);
+
+    const fileName = user.avatar_url; // Usa o nome do arquivo antigo salvo
+
+    if (fs.existsSync(`./uploads/${fileName}`)) {
+      await fs.promises.unlink(`./uploads/${fileName}`);
+      return { message: 'Arquivo excluído com sucesso' };
+    } else {
+      console.log('O arquivo não existe');
+      return { message: 'Arquivo não encontrado' };
+    }
   }
 }
